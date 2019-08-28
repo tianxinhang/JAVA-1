@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Test
+comment0.text=\r\n\ The\ class\ will\ test\ the\ driver\ class\r\n\r\n\ @author\ TIANXIN\ HANG\r\n\ @version\ 2019.5.30\r\n
+comment1.params=
+comment1.target=Test()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Test\r\n
+comment2.params=
+comment2.target=void\ testDefaultConstructors()
+comment2.text=\r\n\ This\ is\ a\ method\ to\ test\ the\ default\ constructors\ of\ the\ Driver\ class\r\n\r\n
+numComments=3

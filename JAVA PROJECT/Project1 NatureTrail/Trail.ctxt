@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.target=Trail
+comment0.text=\r\n\ The\ class\ will\ store\ an\ array\ of\ all\ the\ nature\ features\ on\ the\ trail\r\n\r\n\ @author\ TIANXIN\ HANG\r\n\ @version\ 2019.04.18\r\n
+comment1.params=
+comment1.target=Trail()
+comment1.text=\r\n\ Default\ constructor\ for\ objects\ of\ class\ Trail\r\n
+comment2.params=
+comment2.target=void\ setNatureFeature()
+comment2.text=\r\n\ This\ is\ a\ mututor\ method\ which\ sets\ new\ value\ for\ all\ elements\ of\ Trail\ array\r\n
+comment3.params=i\ newPosition
+comment3.target=void\ setFeaturePosition(int,\ int)
+comment3.text=\r\n\ This\ is\ a\ mututor\ method\ which\ changes\ position\ of\ NatureFeature\r\n\ @param\ An\ int\ to\ indicate\ index\ of\ NatureFeature\ \r\n\ @param\ An\ int\ to\ indicate\ position\ of\ NatureFeature\ \r\n
+comment4.params=i
+comment4.target=NatureFeature\ getFeature(int)
+comment4.text=\r\n\ This\ is\ an\ accessor\ method\ which\ gets\ information\ of\ NatureFeature\r\n\ @param\ An\ int\ to\ indicate\ index\ of\ NatureFeature\ \r\n\ @return\ The\ ith\ information\ of\ NatureFeature\ \r\n
+comment5.params=i
+comment5.target=int\ getFeaturePosition(int)
+comment5.text=\r\n\ This\ is\ an\ accessor\ method\ which\ gets\ position\ of\ NatureFeature\r\n\ @param\ An\ int\ to\ indicate\ index\ of\ NatureFeature\ \r\n\ @return\ The\ ith\ position\ of\ NatureFeature\ \r\n
+comment6.params=i
+comment6.target=java.lang.String\ getFeatureType(int)
+comment6.text=\r\n\ This\ is\ an\ accessor\ method\ which\ gets\ type\ of\ FeatureType\r\n\ @param\ An\ int\ to\ indicate\ index\ of\ NatureFeature\ \r\n\ @return\ The\ ith\ type\ of\ FeatureType\r\n
+comment7.params=i
+comment7.target=int\ getSpacePenalty(int)
+comment7.text=\r\n\ This\ is\ an\ accessor\ method\ which\ gets\ penalty\ of\ NatureFeature\ \r\n\ @param\ An\ int\ to\ indicate\ index\ of\ NatureFeature\ \r\n\ @return\ The\ ith\ penalty\ of\ NatureFeature\ \r\n
+numComments=8

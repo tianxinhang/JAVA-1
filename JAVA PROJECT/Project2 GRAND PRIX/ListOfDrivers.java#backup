@@ -1,0 +1,120 @@
+import java.util.*;
+import java.io.*;
+/**
+ * Write a description of class ListOfDrivers here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class ListOfDrivers
+{
+    // instance variables - replace the example below with your own
+    private ArrayList<Driver> drivers;
+
+    /**
+     * Constructor for objects of class ListOfDrivers
+     */
+    public ListOfDrivers()
+    {
+        drivers = new ArrayList<Driver>();
+    }
+
+    public ListOfDrivers(ArrayList<Driver> newDrivers)
+    {
+        drivers = newDrivers;
+    }
+
+    public ArrayList<Driver> getDrivers()
+    {
+        return drivers;
+    }
+
+    public String getDriversName(int index)
+    {
+        return drivers.get(index).getDriverName();
+    }
+
+    public int getRanking(int index)
+    {
+        return drivers.get(index).getRanking();
+    }
+
+    public String getSpecialSkill(int index)
+    {
+        return drivers.get(index).getSpecialSkill();
+    }
+
+    public boolean getEligibleToRace(int index)
+    {
+        return drivers.get(index).getEligibleToRace();
+    }
+
+    public int getAccumulatedScore(int index)
+    {
+        return drivers.get(index).getAccumulatedScore();
+    }
+
+    public String[][] readingDriversFiles()
+    {
+        String filename = "drivers.txt";
+        String[][] driversInformation = new String[5][3];
+        int number = 0;
+        try
+        {
+            FileReader inputFile = new FileReader(filename);
+            try
+            {
+                Scanner parser = new Scanner(inputFile);
+                while (parser.hasNextLine())
+                {
+                    String inputString = parser.nextLine();
+                    String[] parts = inputString.split(",");
+                    String driversName = parts[0];
+                    String ranking = parts[1]; 
+                    String specialSkills = parts[2];
+                    driversInformation[number][0] = driversName;
+                    driversInformation[number][1] = ranking;
+                    driversInformation[number][2] = specialSkills;
+                    number++;
+                }
+            }
+            finally
+            {
+                inputFile.close();
+            }
+        }
+        catch(FileNotFoundException exception)
+        {
+            System.out.println(filename + "not found");
+        }
+        catch(IOException exception)
+        {
+            System.out.println("Unexpected I/O exception occurs");
+        }
+        return driversInformation;
+    }
+
+    public void setDrivers() // getMethod need equals ; setMethod need used straightly
+    {
+        String[][] infoDrivers = new String [5][3];
+        infoDrivers = readingDriversFiles();
+        Driver[] driver = new Driver[5];
+        for(int i = 0; i < 5; i++)
+        {
+            driver[i] = new Driver();
+        }
+        for(int i = 0; i < 5; i++)
+        {
+            driver[i].setDriversName(infoDrivers[i][0]);
+            driver[i].setRanking(Integer.parseInt(infoDrivers[i][0]));
+            driver[i].setSpecialSkill(infoDrivers[i][0]);
+        }
+        for(int i = 0; i < 5; i++)
+        {
+            drivers.add(driver[i]);
+        }
+
+    }
+
+   
+}

@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Dice
+comment0.text=\r\n\ The\ class\ will\ generate\ a\ random\ number\ from\ 1\ to\ a\ maximum\ value\r\n\r\n\ @author\ TIANXIN\ HANG\r\n\ @version\ 2019.04.18\r\n
+comment1.params=
+comment1.target=Dice()
+comment1.text=\r\n\ Default\ constructor\ for\ objects\ of\ class\ Dice\r\n
+comment2.params=newMaximumValue\ newMinimumValue
+comment2.target=Dice(int,\ int)
+comment2.text=\r\n\ Constructor\ for\ objects\ of\ class\ Dice\r\n
+comment3.params=
+comment3.target=int\ acceptDiceNumber()
+comment3.text=\r\n\ This\ is\ a\ method\ which\ generate\ a\ random\ number\ from\ 1\ to\ maximum\ value\r\n\ @return\ The\ number\ generated\ randomly\r\n
+numComments=4

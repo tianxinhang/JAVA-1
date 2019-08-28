@@ -1,0 +1,66 @@
+
+
+/**
+ * Write a description of class Trail here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class Trail
+{
+    // instance variables - replace the example below with your own
+    private NatureFeature[] features;
+
+    /**
+     * Default constructor for objects of class Trail
+     */
+    public Trail()
+    {
+        features = new NatureFeature[4];
+        for(int i=0;i<=3;i++)
+        {
+            features[i]=new NatureFeature();
+        }
+    }
+    
+    public void setNatureFeature()
+    {
+        features[0].setFeaturePosition(0);
+        features[0].setFeatureType("Creek");
+        features[0].setSpacePenalty(-2);
+        features[1].setFeaturePosition(0);
+        features[1].setFeatureType("Bridge");
+        features[1].setSpacePenalty(4);
+        features[2].setFeaturePosition(0);
+        features[2].setFeatureType("Fallen tree");
+        features[2].setSpacePenalty(-3);
+        features[3].setFeaturePosition(0);
+        features[3].setFeatureType("Landslide");
+        features[3].setFeaturePenalty(-5);
+    }
+    
+    public void setFeaturePosition(int i,int newPosition)
+    {
+        features[i].setFeaturePosition(newPosition);
+    }
+    
+    public NatureFeature getFeature(int i)
+    {
+        return features[i];
+    }
+    
+    public int getFeaturePosition(int i)
+    {
+        return features[i].getFeaturePosition();
+    }
+    
+    public String getFeatureType(int i)
+    {
+        return features[i].getFeatureType();
+    }
+    
+    public int getSpacePenalty(int i)
+    {
+        return features[i].getSpacePenalty();
+    }
+}

@@ -1,0 +1,470 @@
+
+import java.util.*;
+/**
+ * Write a description of class Championship here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class Championship
+{
+    private ListOfDrivers drivers;
+    private ListOfVenues venues;
+
+    /**
+     * Constructor for objects of class Championship
+     */
+    public Championship()
+    {
+        drivers = new ListOfDrivers();
+        venues = new ListOfVenues();
+    }
+
+    public Championship(ListOfDrivers newDrivers,ListOfVenues newVenues)
+    {
+        drivers = newDrivers;
+        venues = newVenues;
+    }
+
+    public ListOfDrivers getDrivers()
+    {
+        return drivers;
+    }
+
+    public ListOfVenues getVenues()
+    {
+        return venues;
+    }
+
+    public void setDrivers(ListOfDrivers newDrivers)
+    {
+        drivers = newDrivers;
+    }
+
+    public void setDrivers(ListOfVenues newVenues)
+    {
+        venues = newVenues;
+    }
+
+    public void welcomeToGame()
+    {
+        System.out.println('\u000C');  // clear screen
+        String position[] = new String[100];
+        for(int i = 1;i < 100;i++){
+            System.out.print("=");
+        }
+        System.out.println("\r");
+        for(int i = 1;i < 35;i++){
+            System.out.print(" ");
+        }
+        System.out.println("Welcome to play Grand Prix!");
+        System.out.println("\r");
+        for(int i = 1;i < 100;i++){
+            System.out.print("=");
+        }
+        System.out.println("\r");
+        System.out.println("The game will use venues defined in the venues.txt file.");
+        System.out.println("The game will use drivers defined in the drivers.txt file.");
+    }
+
+    public int getNumberOfRace()
+    {
+        System.out.println("please enter the number of races in the championship (3 to 5)");
+        int temp = validation(3,5);
+        return temp;
+    }
+
+    public int validation(int min,int max)
+    {   
+        boolean a = true;
+        String temp1 = "";
+        int temp2 = 0;
+        do
+        {            
+            Scanner console = new Scanner(System.in);
+            temp1 = console.nextLine();  
+            if (temp1.length() == 0)
+            {
+                System.out.println("Error! input can not be empty");
+                a = false;
+            }
+            else
+            {
+                for(int position = 0; position < temp1.length(); position++)
+                {
+                    char thisCharacter = temp1.charAt(position);
+                    if (thisCharacter < '0' || thisCharacter > '9')
+                    {
+                        System.out.println("error,only integer should be input");
+                        a = false;
+                        break;
+                    }
+                    else 
+                        a = true;
+                }
+                if(a == true)
+                {
+                    temp2 = Integer.parseInt(temp1);
+                    if(temp2 >= min && temp2 <= max)
+                    {
+                        a = true;
+                    }
+                    else    
+                    {
+                        a = false;
+                        System.out.println("Length must between " + min + " and " + max);
+                    }
+                }
+            }
+        }
+        while(a == false);
+        System.out.println("The number of race: " + temp2);
+        return temp2;
+    }
+
+    public int getPenalty(int index)
+    {
+        int penalty = 0;
+        switch(drivers.getRanking(index))
+        {
+            case 1: penalty = 0;break;
+            case 2: penalty = 3;break;
+            case 3: penalty = 5;break;
+            case 4: penalty = 7;break;
+            case 5: penalty = 10;break;
+            default: penalty = 10;break;
+        }
+        return penalty;
+    }
+
+    public void getSkill(int driverNo,int lapNo)
+    {
+        int reduction = 0;
+        RNG rng = new RNG();
+        String a = drivers.getSpecialSkill(driverNo);
+        if(a.equals("Braking")||a.equals("Cornering"))
+            reduction = rng.getRNG(1,8);
+        if(a.equals("Overtaking") && lapNo%3 == 0)
+            reduction = rng.getRNG(10,20);
+        drivers.setAccumulatedTime(driverNo,reduction);
+    }
+
+    public void meetProblem(int driverNo)
+    {
+        int additionTime = 0;
+        RNG rng = new RNG();
+        int a = rng.getRNG(1,100);
+        if(a == 1)
+        {
+            additionTime = 0;
+            drivers.setEligibleToRace(driverNo,false);
+            System.out.println(drivers.getDriversName(driverNo) + " met unrecoverable fault happened and " + drivers.getDriversName(driverNo) + " lose eligiblility of game");
+        }
+        if(a > 1 && a < 5)
+        {
+            additionTime = 120;
+            System.out.println(drivers.getDriversName(driverNo) + " met major mechanical fault happened and get 120 sec addition to the lap time");
+        }
+        if(a >= 5 && a <= 9)
+        {
+            additionTime = 20;
+            System.out.println(drivers.getDriversName(driverNo) + " met major mechanical fault happened and get 20 sec addition to the lap time");
+        }
+        drivers.setAccumulatedTime(driverNo,additionTime);
+    }
+
+    public boolean chanceOfRain(int venueNo)
+    {
+        int rainChance = (int)venues.getChanceOfRain(venueNo) * 100;
+        RNG rng = new RNG();
+        int rn = rng.getRNG(1,100);
+        if(rainChance >= rn)
+        {
+            System.out.println("It starts rainning now!");
+            return true;
+        }
+        else
+        {
+            System.out.println("The weather is so good now!");
+            return false;
+        }
+    }
+
+    public boolean changeTyres(int driverNo)
+    {
+        RNG rng = new RNG();
+        int rn = rng.getRNG(1,2);
+        if(rn == 1)
+        {
+            System.out.println(drivers.getDriversName(driverNo) + "  is to spend 10 seconds to change to wet-tyres");
+            drivers.setAccumulatedTime(driverNo,10);
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public int eachLap(int venueNo,int driverNo,int lapNo,boolean rain,boolean tyres)
+    {
+        int time = 0;
+        meetProblem(driverNo); 
+        getSkill(driverNo,lapNo);
+        drivers.setAccumulatedTime(driverNo,venues.getAverageLapTime(venueNo));
+        if(lapNo == 1)
+        {
+            tyres = changeTyres(driverNo);
+        }
+        if(rain)
+        {
+            if(tyres == false)
+            {
+                drivers.setAccumulatedTime(driverNo,5);
+            }
+        }
+        time = drivers.getAccumulatedTime(driverNo);
+        return time;
+    }
+
+    public void eachLapResultDisplay(int venueNo,int lapNo)
+    {
+        ArrayList<Integer> index = new ArrayList<Integer>();
+        ArrayList<Integer> driveTime = new ArrayList<Integer>();
+        ArrayList<Boolean> tyrestype =  new ArrayList<Boolean>();
+        for(int i = 0; i < drivers.getDrivers().size(); i++)
+        {
+            tyrestype.add(false);
+        }
+        for(int currentLap = 0;currentLap < venues.getNoOFlaps(venueNo); currentLap++ )
+        {
+            boolean rain = chanceOfRain(venueNo);
+            System.out.println("This is lap No." + (lapNo + 1) + ".");
+            for(int driverNo = 0; driverNo < drivers.getDrivers().size(); driverNo++)
+            {
+                int eachLapTime = eachLap(venueNo,driverNo,lapNo,rain,tyrestype.get(driverNo));
+                index.add(driverNo);
+                driveTime.add(drivers.getAccumulatedTime(driverNo));
+            }
+        }
+        sortArray(index,driveTime);
+        int leader = 0;
+        for(int i = 0; i < drivers.getDrivers().size(); i++)
+        {
+            if(drivers.getEligibleToRace(i))
+            {
+                leader = i;
+                break;
+            }
+        }
+        System.out.println("In No." + (lapNo + 1) + " lap,the leading driver in this lap is " + drivers.getDriversName(leader) + 
+        ", and time used is " + drivers.getAccumulatedTime(leader) + "seconds.");
+    }
+
+    public int totalLapTime(int venueNo,int driverNo)
+    {
+        int laps = venues.getNoOFlaps(venueNo);
+        int total = drivers.getAccumulatedTime(driverNo);
+        for(int i = 0; i < laps; i++)
+        {
+            total = drivers.getAccumulatedTime(driverNo);
+        }
+        total = total + getPenalty(driverNo);
+        drivers.setAccumulatedTime(driverNo,total);
+        return total;
+    }
+
+    public void resultOfEachVenue(int venueNo)
+    {
+        //int[] index = new int[drivers.getDrivers().size()];
+        //int[] totalTime = new int[drivers.getDrivers().size()];
+        ArrayList<Integer> index = new ArrayList<Integer>();
+        ArrayList<Integer> totalTime = new ArrayList<Integer>();
+        ArrayList<Boolean> tyrestype =  new ArrayList<Boolean>();
+        for(int i = 0; i < drivers.getDrivers().size(); i++)
+        {
+            tyrestype.add(false);
+        }
+        for(int i = 0; i < venues.getNoOFlaps(venueNo); i++)
+        {
+            eachLapResultDisplay(venueNo,i);
+            inputEnter();
+        }
+        for(int i = 0;i < drivers.getDrivers().size(); i++)
+        {
+            //index[i] = i;
+            //totalTime[i] = totalLapTime(venueNo,i);
+            index.add(i);
+            totalTime.add(totalLapTime(venueNo,i));
+        }
+        sortArray(index,totalTime);
+        int[] points = {8,5,3,1};
+        for(int i = 0; i < 4; i++)
+        {
+            drivers.setAccumulatedScore(index.get(i),points[i]);   
+            System.out.println("Place " + (i + 1) + " is " + drivers.getDriversName(index.get(i)) + " and he/she got " + points[i] + " points");
+        }
+    }
+
+    public void sortArray(ArrayList<Integer> arr1,ArrayList<Integer> arr2)
+    {
+        RNG rng = new RNG();
+        for(int i = 0;i < arr1.size() - 1; i++)
+        {
+            for(int j = 0; j < arr1.size() - 1 - i; j++)
+            {
+                if(arr1.get(j) > arr1.get(j + 1))
+                {
+                    int temp1 = arr1.get(j);
+                    arr1.set(j,arr1.get(j + 1));
+                    arr1.set(j + 1,temp1);
+                    int temp2 = arr2.get(j) ;
+                    arr2.set(j,arr2.get(j + 1));
+                    arr2.set(j + 1,temp2);
+                }
+                if(arr1.get(j)  == arr1.get(j + 1))
+                {
+                    int RN = rng.getRNG(0,1);
+                    if(RN == 0)
+                    {
+                        int temp1 = arr1.get(j);
+                        arr1.set(j,arr1.get(j + 1));
+                        arr1.set(j + 1,temp1);
+                        int temp2 = arr2.get(j) ;
+                        arr2.set(j,arr2.get(j + 1));
+                        arr2.set(j + 1,temp2);
+                    }
+                }
+            }
+        }
+    }
+
+    public void setDriver()
+    {
+        drivers.setDrivers();
+    }
+
+    public void inputEnter()
+    {
+        Scanner enter = new Scanner(System.in);
+        System.out.println("Please press Enter to continue game");
+        String enter1 = enter.nextLine(); // press Enter will show nothing on terminal 
+    }
+
+    public void displayVenues()
+    {
+        ListOfVenues newVenues3 = new ListOfVenues();
+        newVenues3.setVenues();
+        System.out.println("Please select the Venues below ");
+        for(int i = 0; i < newVenues3.getVenues().size(); i++)
+        {
+            System.out.println("No." + (i + 1) + " Venue is " + newVenues3.getVenueName(i) + " with " + newVenues3.getNoOFlaps(i) + 
+                "laps and each lap time of " + newVenues3.getAverageLapTime(i) + " seconds.");
+        }
+    }
+
+    public int setRaceVenues()
+    {
+        ListOfVenues newVenues1 = new ListOfVenues();
+        newVenues1.setVenues();
+        System.out.println("please enter the No. of venue:");
+        int temp = validation(1,newVenues1.getVenues().size());
+        System.out.println("You have select venue: " + newVenues1.getVenueName(temp - 1));
+        System.out.println("\r");
+        return temp;
+    }
+
+    public void checkSameVenue()
+    {
+        ListOfVenues newVenues2 = new ListOfVenues();
+        newVenues2.setVenues();
+        int index = 0;
+        boolean check = true;
+        while(check)
+        {
+            index = setRaceVenues();
+            if(venues.getVenues().size() == 0)
+            {
+                venues.getVenues().add(newVenues2.getVenues().get(index));
+                check = false;
+            }
+            else
+            {
+                for(int j = 0; j < venues.getVenues().size(); j++)
+                {
+                    if(venues.getVenueName(j).equals(newVenues2.getVenueName(index)))
+                    {
+                        System.out.println("This venue has been used please select another one.");
+                    }
+                    else
+                    {
+                        venues.getVenues().add(newVenues2.getVenues().get(index));
+                        check = false;
+                    }
+                }
+            }
+        }
+    }
+
+    public void runAllRace()
+    {
+        int numberOfRace = getNumberOfRace();
+        for(int i = 0; i < numberOfRace;i++)
+        {
+            displayVenues();
+            checkSameVenue();
+            resultOfEachVenue(i);   
+            System.out.println("\r");
+            drivers.reSetAccumulatedTime();
+            inputEnter();
+        }
+    }
+
+    public void startChampionship()
+    {
+        welcomeToGame();
+        inputEnter();
+        setDriver();
+        runAllRace();
+        System.out.println("-".repeat(100));
+        showResult();
+    }
+
+    public void readyToDelete1(int venueNo)
+    {
+        ArrayList<Integer> rank = new ArrayList<Integer>();
+        ArrayList<Integer> totalTime = new ArrayList<Integer>();
+        for(int i = 0; i < venues.getNoOFlaps(venueNo); i++)
+        {
+            eachLapResultDisplay(venueNo,i);
+        }
+        for(int i = 0; i < drivers.getDrivers().size(); i++)
+        {
+            totalTime.add(totalLapTime(venueNo,i));
+        }
+        rank.addAll(totalTime);
+        Collections.sort(rank);
+        int[] points = {8,5,3,1};
+        for(int i = 0; i < 4; i++)
+        {
+            int a = totalTime.indexOf(rank.get(i));
+            drivers.setAccumulatedScore(a,points[i]);   
+            System.out.println("Place " + (i + 1) + " is " + drivers.getDriversName(a) + " and he/she got " + points[i] + " points");
+        }
+    }
+
+    public void showResult()
+    {
+        ArrayList<Integer> index = new ArrayList<Integer>();
+        ArrayList<Integer> totalPoints = new ArrayList<Integer>();
+        for(int i = 0; i < drivers.getDrivers().size(); i++)
+        {
+            index.add(i);
+            totalPoints.add(drivers.getAccumulatedScore(i));
+        }
+        sortArray(index,totalPoints);
+        for(int i = 0; i < drivers.getDrivers().size(); i++)
+        {
+            int a = index.get(drivers.getDrivers().size() - 1 - i);
+            System.out.println("Place " + (i + 1) + " is " + drivers.getDriversName(a));
+        }
+    }
+}

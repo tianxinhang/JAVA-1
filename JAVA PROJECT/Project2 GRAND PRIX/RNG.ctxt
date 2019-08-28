@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.target=RNG
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ RNG\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=RNG()
+comment1.text=\r\n\ Default\ constructor\ for\ objects\ of\ class\ RNG\r\n
+comment2.params=newMinimumValue\ newMaximumValue
+comment2.target=RNG(int,\ int)
+comment2.text=\r\n\ Constructor\ for\ objects\ of\ class\ RNG\r\n
+comment3.params=
+comment3.target=int\ getMinimumValue()
+comment3.text=\r\n\ This\ is\ an\ accessor\ method\ which\ gets\ minimum\ value\r\n\ @return\ minimum\ value\r\n
+comment4.params=
+comment4.target=int\ getMaximumValue()
+comment4.text=\r\n\ This\ is\ an\ accessor\ method\ which\ gets\ maximum\ value\r\n\ @return\ maximum\ value\r\n
+comment5.params=newMinimumValue
+comment5.target=void\ setMinimumValue(int)
+comment5.text=\r\n\ This\ is\ a\ mututor\ method\ which\ changes\ minimum\ value\r\n\ @param\ An\ int\ to\ indicate\ minimun\ value\r\n
+comment6.params=newMaximumValue
+comment6.target=void\ setMaximumValue(int)
+comment6.text=\r\n\ This\ is\ a\ mututor\ method\ which\ changes\ maximum\ value\r\n\ @param\ An\ int\ to\ indicate\ maximum\ value\r\n
+comment7.params=newMinimumValue\ newMaximumValue
+comment7.target=int\ getRNG(int,\ int)
+comment7.text=\r\n\ This\ is\ a\ method\ which\ generate\ a\ random\ number\ from\ minimum\ to\ maximum\ value\r\n\ @return\ The\ number\ generated\ randomly\r\n
+numComments=8

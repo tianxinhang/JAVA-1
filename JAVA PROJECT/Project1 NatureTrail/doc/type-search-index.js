@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"Dice","h":"","u":""},{"l":"Game","h":"","u":""},{"l":"NatureFeature","h":"","u":""},{"l":"Player","h":"","u":""},{"l":"test","h":"","u":""},{"l":"Trail","h":"","u":""},{"l":"所有类","h":"","u":"allclasses-index.html"}]
